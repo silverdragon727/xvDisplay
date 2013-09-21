@@ -3,37 +3,41 @@
 
     Public Const Version As String = "v0.1a1"
 
-    Friend StageForm As Form
     Friend Drawer As Draw
-    Friend ItemTable As Item.ItemTable
-    Friend ResTable As Resources.ResTable
+    Friend ItemTable As Items.ItemTable
+    Friend ResTable As Resources.ResourceTable
     Friend Configuration As Configuration
     Friend ScriptEngine As SBSLibrary.SBSEngine
     Friend ScriptFunctions As ScriptFuncLib
 
-    Sub New(ByRef _form As Form)
-        SBSLibrary.StandardIO.PrintLine("xvDisplay Controller " + Version + " Initializing... ")
-        StageForm = _form
-        ItemTable = New Item.ItemTable()
-        ResTable = New Resources.ResTable()
+    Sub New()
+        ' 常量不使用 String.Format，以便编译器优化
+        SBSLibrary.StandardIO.PrintLine("xvDisplay Controller " & Version & " Initializing... ")
+        ItemTable = New Items.ItemTable()
+        ResTable = New Resources.ResourceTable()
 
         SBSLibrary.StandardIO.PrintLine("Script Engine Initializing...")
         ScriptEngine = New SBSLibrary.SBSEngine()
         ScriptFunctions = New ScriptFuncLib(Me)
 
-        Drawer = New Draw(StageForm, ItemTable, ResTable, ScriptEngine)
-        Configuration = New Configuration(StageForm, ItemTable, ResTable, Drawer, ScriptEngine)
+        Drawer = New Draw(ItemTable, ResTable, ScriptEngine)
+        Configuration = New Configuration(Drawer, ItemTable, ResTable, ScriptEngine)
 
-        SBSLibrary.StandardIO.PrintLine("Initializing done.")
+        SBSLibrary.StandardIO.PrintLine("Initialized.")
     End Sub
 
     Sub Start()
+
+#If DEBUG Then
+        DebugForm.Show()
+#End If
+
         Try
             Configuration.LoadConfFile("startup.xdc", False)
         Catch ex As Exception
-            SBSLibrary.StandardIO.PrintLine("Error: " + ex.Message)
-            DebugForm.Show()
+            SBSLibrary.StandardIO.PrintLine(String.Concat("Error: ", ex.Message))
         End Try
+
     End Sub
 
 #Region "IDisposable Support"
@@ -44,7 +48,7 @@
         If Not Me.disposedValue Then
             If disposing Then
                 Drawer.Dispose()
-                ItemTable.Dispose()
+                ItemTable.Clear()
                 ResTable.Dispose()
             End If
         End If
