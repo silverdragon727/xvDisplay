@@ -1,4 +1,4 @@
 xvDisplay
 =========
 
-An frontend of xvg project.
+The front-end implementation of the Project XVG.
