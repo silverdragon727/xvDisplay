@@ -1,6 +1,6 @@
 ﻿Imports SBSLibrary
 
-Public Class ScriptFuncLib
+Public NotInheritable Class ScriptFuncLib
     Dim Controller As Controller
 
     Sub New(ByRef _controller As Controller)
@@ -18,28 +18,29 @@ Public Class ScriptFuncLib
     End Sub
 
     Public Function XVDReadConf(ByRef argsList As ArrayList) As SBSValue
-        Dim confPath As SBSValue = argsList(0)
+        Dim confPath As SBSValue = CType(argsList(0), SBSValue)
 
-        Controller.Configuration.LoadConfFile(CStr(confPath.Value), True)
+        Controller.Configuration.LoadConfFile(CType(confPath.Value, String), True)
         Return Nothing
     End Function
 
     Public Function XVDReadGlobalConf(ByRef argsList As ArrayList) As SBSValue
-        Dim confPath As SBSValue = argsList(0)
+        Dim confPath As SBSValue = CType(argsList(0), SBSValue)
 
-        Controller.Configuration.LoadConfFile(CStr(confPath.Value), False)
+        Controller.Configuration.LoadConfFile(CType(confPath.Value, String), False)
         Return Nothing
     End Function
 
+    ' TODO: 建议改为 XVDUnloadLocalConf
     Public Function XVDRemoveTempConf(ByRef argsList As ArrayList) As SBSValue
-        Controller.ResTable.DisposeTempRes()
-        Controller.ItemTable.DisposeTempTags()
+        Controller.ResTable.DisposeTempResources()
+        Controller.ItemTable.DisposeTempItems()
         Return Nothing
     End Function
 
     Public Function XVDDrawItemSet(ByRef argslist As ArrayList) As SBSValue
-        Dim setName As SBSValue = argslist(0)
-        Controller.Drawer.DrawItemSet(CStr(setName.Value))
+        Dim setName As SBSValue = CType(argslist(0), SBSValue)
+        Controller.Drawer.DrawItemSet(CType(setName.Value, String))
         Return Nothing
     End Function
 
@@ -49,66 +50,39 @@ Public Class ScriptFuncLib
     End Function
 
     Public Function XVDChangeItemRes(ByRef argslist As ArrayList) As SBSValue
-        Dim itemName As String = CStr(argslist(0).Value)
-        Dim resType As String = CStr(argslist(1).Value)
-        Dim resPtr As UInt16 = Controller.ResTable.GetResPtr(CStr(argslist(2).Value))
-        Dim status As UInt16 = GetStatusByName(CStr(argslist(3).Value))
+        Dim itemName As String = CType(argslist(0).Value, String)
+        Dim resType As String = CType(argslist(1).Value, String)
+        Dim resPtr As Integer = Controller.ResTable.GetPointer(CType(argslist(2).Value, String))
+        Dim status As Integer = GetStatusByName(CType(argslist(3).Value, String))
 
-        Dim item As Item.ItemTag = Controller.ItemTable.GetItemByName(itemName)
-        Dim resptrs?() As UInt16 = GetResListFromItem(item, resType)
+        Dim resptrs?() As Integer = Controller.ItemTable(itemName).GetResourceByType(resType)
 
         If resptrs IsNot Nothing Then
             resptrs(status) = resPtr
             Controller.Drawer.Update = Draw.UpdateFlag.Reflow
         Else
-            Throw New ApplicationException("Undefined item '" + itemName + "'.")
+            Throw New ApplicationException(String.Format("Undefined item ""{0}"".", itemName))
         End If
-
-
         Return Nothing
     End Function
 
     Public Function XVDSetDrawingUpdateFlag(ByRef argslist As ArrayList) As SBSValue
-        Dim flag As String = CStr(argslist(0).Value).ToLower()
+        Dim before As Draw.UpdateFlag = Controller.Drawer.Update
 
-        If flag = "repaint" Then
-            Controller.Drawer.Update = Draw.UpdateFlag.Repaint
-        ElseIf flag = "reflow" Then
-            Controller.Drawer.Update = Draw.UpdateFlag.Reflow
-        End If
-
+        If Not [Enum].TryParse(argslist(0).Value, True, Controller.Drawer.Update) Then _
+            Controller.Drawer.Update = before
         Return Nothing
     End Function
 
     Public Function XVDExit(ByRef argslist As ArrayList) As SBSValue
-        DebugForm.IfClose = True
+        DebugForm.closeFlag = True
         Application.Exit()
         Return Nothing
     End Function
 
-    Private Function GetStatusByName(ByVal name As String) As Item.EventType
-        name = name.ToLower()
-        If name = "normal" OrElse name = "" Then
-            Return Item.EventType.Normal
-        ElseIf name = "hover" Then
-            Return Item.EventType.Hover
-        ElseIf name = "press" Then
-            Return Item.EventType.Press
-        End If
-        Return Nothing
-    End Function
-
-    Private Function GetResListFromItem(ByRef item As Item.ItemTag, ByVal resType As String) As UInt16?()
-        resType = resType.ToLower()
-        If resType = "image" Then
-            Return item.Content.Image
-        ElseIf resType = "text" Then
-            Return item.Content.Text
-        ElseIf resType = "style" Then
-            Return item.Content.Style
-        ElseIf resType = "script" Then
-            Return item.Content.Script
-        End If
-        Return Nothing
+    Private Shared Function GetStatusByName(ByVal name As String) As Items.EventType
+        Dim type As Items.EventType
+        If Not [Enum].TryParse(name, True, type) Then type = Items.EventType.Normal
+        Return type
     End Function
 End Class
