@@ -1,6 +1,9 @@
 ﻿Imports System
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Windows.Markup
+
 
 ' 有关程序集的常规信息通过下列特性集
 ' 控制。更改这些特性值可修改
@@ -10,12 +13,12 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("xvDisplay")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("xvDisplay")> 
-<Assembly: AssemblyCopyright("Copyright ©  2013")> 
+<Assembly: AssemblyCompany("InkenTenka Studio")> 
+<Assembly: AssemblyProduct("InkenTenka XVG")> 
+<Assembly: AssemblyCopyright("Copyright © InkenTenka Studio. Some rights reserved.")> 
 <Assembly: AssemblyTrademark("")> 
 
-<Assembly: ComVisible(False)>
+<Assembly: ComVisible(False)> 
 
 '如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
 <Assembly: Guid("dbd96ed6-f0f7-40f1-93eb-7e4bf127af8f")> 
@@ -33,3 +36,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
 <Assembly: AssemblyFileVersion("1.0.0.0")> 
+
+<Assembly: Dependency("SBSLibrary", LoadHint.Sometimes)> 
+<Assembly: XmlnsDefinition("http://schemas.dymoon.org/xvg/2013/xaml", "xvDisplay")> 
+<Assembly: XmlnsDefinition("http://schemas.dymoon.org/xvg/2013/xaml", "xvDisplay.Items")> 
+<Assembly: XmlnsDefinition("http://schemas.dymoon.org/xvg/2013/xaml", "xvDisplay.Resources")> 
+<Assembly: XmlnsPrefix("http://schemas.dymoon.org/xvg/2013/xaml", "xvg")> 
