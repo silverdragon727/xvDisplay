@@ -24,13 +24,13 @@ Partial Class StageForm
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'Form1
+        'StageForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 264)
+        Me.ClientSize = New System.Drawing.Size(284, 262)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Name = "Form1"
+        Me.Name = "StageForm"
         Me.Text = "xvDisplay Stage"
         Me.ResumeLayout(False)
 

@@ -22,32 +22,32 @@ Partial Class DebugForm
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.SuspendLayout()
+        Me.OutputTextBox = New System.Windows.Forms.TextBox()
+        Me.SuspendLayout
         '
-        'TextBox1
+        'OutputTextBox
         '
-        Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.TextBox1.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.ForeColor = System.Drawing.Color.LawnGreen
-        Me.TextBox1.Location = New System.Drawing.Point(-2, -2)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(502, 293)
-        Me.TextBox1.TabIndex = 0
+        Me.OutputTextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(64,Byte),Integer), CType(CType(64,Byte),Integer), CType(CType(64,Byte),Integer))
+        Me.OutputTextBox.Font = New System.Drawing.Font("Consolas", 9!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.OutputTextBox.ForeColor = System.Drawing.Color.LawnGreen
+        Me.OutputTextBox.Location = New System.Drawing.Point(-2, -2)
+        Me.OutputTextBox.Multiline = true
+        Me.OutputTextBox.Name = "OutputTextBox"
+        Me.OutputTextBox.ReadOnly = true
+        Me.OutputTextBox.Size = New System.Drawing.Size(502, 293)
+        Me.OutputTextBox.TabIndex = 0
         '
         'DebugForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 12!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(497, 287)
-        Me.Controls.Add(Me.TextBox1)
+        Me.ClientSize = New System.Drawing.Size(484, 287)
+        Me.Controls.Add(Me.OutputTextBox)
         Me.Name = "DebugForm"
         Me.Text = "Debug - Standard I/O"
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        Me.ResumeLayout(false)
+        Me.PerformLayout
 
-    End Sub
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+End Sub
+    Friend WithEvents OutputTextBox As System.Windows.Forms.TextBox
 End Class
