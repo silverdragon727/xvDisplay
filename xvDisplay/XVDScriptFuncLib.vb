@@ -52,7 +52,7 @@ Public NotInheritable Class ScriptFuncLib
     Public Function XVDChangeItemRes(ByRef argslist As ArrayList) As SBSValue
         Dim itemName As String = CType(argslist(0).Value, String)
         Dim resType As String = CType(argslist(1).Value, String)
-        Dim resPtr As Integer = Controller.ResTable.GetPointer(CType(argslist(2).Value, String))
+        Dim resPtr As Integer = Controller.ResTable.PointerOf(CType(argslist(2).Value, String))
         Dim status As Integer = GetStatusByName(CType(argslist(3).Value, String))
 
         Dim resptrs?() As Integer = Controller.ItemTable(itemName).GetResourceByType(resType)
