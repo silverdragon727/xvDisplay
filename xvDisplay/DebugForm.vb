@@ -1,7 +1,5 @@
 ﻿Public NotInheritable Class DebugForm
 
-    Friend Shared closeFlag As Boolean = False
-
     Private Sub OnLoaded(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         OutputTextBox.Top = -2
         OutputTextBox.Left = -2
@@ -30,7 +28,7 @@
 
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
         Me.Hide()
-        e.Cancel = Not closeFlag
+        e.Cancel = (e.CloseReason = CloseReason.UserClosing)
         MyBase.OnFormClosing(e)
     End Sub
 End Class

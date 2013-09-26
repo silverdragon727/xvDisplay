@@ -23,7 +23,6 @@
                     ctrl.Start()
                 Next
             Case "q"c
-                DebugForm.closeFlag = True
                 Application.Exit()
         End Select
 

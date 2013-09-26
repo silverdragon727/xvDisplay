@@ -75,7 +75,6 @@ Public NotInheritable Class ScriptFuncLib
     End Function
 
     Public Function XVDExit(ByRef argslist As ArrayList) As SBSValue
-        DebugForm.closeFlag = True
         Application.Exit()
         Return Nothing
     End Function
